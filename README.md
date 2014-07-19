@@ -8,3 +8,4 @@ inspired and base on sendyHalim/laravel-modularizer
 
 **note
 Still under development
+Many things might change
