@@ -1,0 +1,7 @@
+<?php  namespace {{NAMESPACE}}\{{VERSION}}\Validator;
+
+interface ValidatorInterface
+{
+    public function validate(array $input);
+    public function getMessages();
+}

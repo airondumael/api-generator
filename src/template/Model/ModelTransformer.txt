@@ -1,0 +1,13 @@
+<?php  namespace {{NAMESPACE}}\{{VERSION}}\{{MODEL}};
+
+use {{NAMESPACE}}\{{VERSION}}\API\AbstractTransformer;
+
+class {{MODEL}}Transformer extends AbstractTransformer {
+
+    public function transform($item)
+    {
+        return [
+            'id' => $item->id
+        ];
+    }
+}

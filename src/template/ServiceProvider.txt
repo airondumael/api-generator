@@ -1,0 +1,30 @@
+<?php  namespace {{NAMESPACE}}\{{VERSION}};
+
+use Illuminate\Support\ServiceProvider;
+
+class {{NAMESPACE}}{{VERSION}}ServiceProvider extends ServiceProvider {
+    protected $defer = false;
+
+    public function boot()
+    {
+        // bind repositories to it's interfaces
+        $this->bindRepositories();
+    }
+
+    public function bindRepositories()
+    {
+        // Sample Binding of Model Repository
+        $this->app->bind('{{NAMESPACE}}\{{VERSION}}\Model\ModelRepositoryInterface', function() {
+            return new Model\EloquentModelRepository(new Model\ModelEloquentModel);
+        });
+
+    }
+
+    public function register() {}
+
+    public function provides()
+    {
+        return [];
+    }
+
+}

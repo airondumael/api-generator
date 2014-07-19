@@ -1,0 +1,11 @@
+<?php  namespace {{NAMESPACE}}\{{VERSION}}\{{MODEL}};
+
+use Illuminate\Database\Eloquent\SoftDeletingTrait;
+use Eloquent;
+
+class {{MODEL}}EloquentModel extends Eloquent {
+    use SoftDeletingTrait;
+    protected $table = '{{MODEL_PLURAL}}';
+    protected $fillable = [];
+    protected $datas = ['deleted_at'];
+}

@@ -1,0 +1,12 @@
+<?php  namespace {{NAMESPACE}}\{{VERSION}}\{{MODEL}}\Validators;
+
+use {{NAMESPACE}}\{{VERSION}}\Validator\AbstractValidator;
+use {{NAMESPACE}}\{{VERSION}}\Validator\ValidatorInterface;
+
+class {{MODEL}}CreateValidator extends AbstractValidator implements ValidatorInterface {
+
+    public function getRules()
+    {
+        return [];
+    }
+}

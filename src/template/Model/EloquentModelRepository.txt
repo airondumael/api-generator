@@ -1,0 +1,10 @@
+<?php  namespace {{NAMESPACE}}\{{VERSION}}\{{MODEL}};
+
+use {{NAMESPACE}}\{{VERSION}}\Repository\AbstractEloquentRepository;
+
+class Eloquent{{MODEL}}Repository extends AbstractEloquentRepository implements {{MODEL}}RepositoryInterface {
+    public function __construct({{MODEL}}EloquentModel $class)
+    {
+        $this->class = $class;
+    }
+} 

@@ -1,0 +1,103 @@
+<?php  namespace {{NAMESPACE}}\{{VERSION}}\{{MODEL}};
+
+use Illuminate\Database\Eloquent\ModelNotFoundException;
+use {{NAMESPACE}}\{{VERSION}}\API\ApiController;
+use {{NAMESPACE}}\{{VERSION}}\{{MODEL}}\Validators\{{MODEL}}CreateValidator;
+use {{NAMESPACE}}\{{VERSION}}\{{MODEL}}\Validators\{{MODEL}}UpdateValidator;
+use Input;
+
+class {{MODEL}}Controller extends ApiController {
+
+    protected ${{MODEL}}Repository;
+    protected ${{MODEL}}Transformer;
+    private ${{MODEL}}CreateValidator;
+    private ${{MODEL}}UpdateValidator;
+
+    public function __construct(
+        Eloquent{{MODEL}}Repository ${{MODEL}}Repository,
+        {{MODEL}}Transformer ${{MODEL}}Transformer,
+        {{MODEL}}CreateValidator ${{MODEL}}CreateValidator,
+        {{MODEL}}UpdateValidator ${{MODEL}}UpdateValidator
+    )
+    {
+        $this->{{MODEL}}Repository = ${{MODEL}}Repository;
+        $this->{{MODEL}}Transformer = ${{MODEL}}Transformer;
+        $this->{{MODEL}}CreateValidator = ${{MODEL}}CreateValidator;
+        $this->{{MODEL}}UpdateValidator = ${{MODEL}}UpdateValidator;
+    }
+
+    public function index()
+    {
+        $limit = Input::get('limit') ?: 10;
+        $limit = ($limit <= 50) ? $limit : 50;
+
+        ${{MODEL}}s = $this->{{MODEL}}Repository->paginate($limit);
+
+        $transformedData = $this->{{MODEL}}Transformer->transformCollection(${{MODEL}}s);
+
+        return $this->respondCollection(${{MODEL}}s, $transformedData);
+    }
+
+    public function store()
+    {
+        $input = Input::only([]);
+
+        if(${{MODEL}} = $this->{{MODEL}}Repository->create($input, $this->{{MODEL}}CreateValidator)) {
+            $transformedData = $this->{{MODEL}}Transformer->transform(${{MODEL}});
+            $response = $this->respondCreated($transformedData);
+        } else {
+            $details = $this->{{MODEL}}CreateValidator->getMessages()->toArray();
+            $response = $this->respondValidatorError('Validation Error.', '1500', $details);
+        }
+
+        return $response;
+    }
+
+    public function show($id)
+    {
+        try {
+            ${{MODEL}} = $this->{{MODEL}}Repository->findOrFail($id);
+            $transformedData = $this->{{MODEL}}Transformer->transform(${{MODEL}});
+
+            $response = $this->respondItem($transformedData);
+
+        } catch (ModelNotFoundException $exception) {
+
+            $response = $this->respondModelNotFound('{{MODEL}} not found.', 1404);
+
+        }
+
+        return $response;
+    }
+
+    public function update($id)
+    {
+        $input = Input::only([]);
+
+        if(${{MODEL}} = $this->{{MODEL}}Repository->update($input, $id, $this->{{MODEL}}UpdateValidator->setId($id))) {
+            $transformedData = $this->{{MODEL}}Transformer->transform(${{MODEL}});
+            $response = $this->respondCreated($transformedData);
+        } else {
+            $details = $this->{{MODEL}}UpdateValidator->getMessages()->toArray();
+            $response = $this->respondValidatorError('Validation Error.', '1500', $details);
+        }
+
+        return $response;
+    }
+
+    public function destroy($id)
+    {
+        try {
+            $this->{{MODEL}}Repository->delete($id);
+
+            $response = $this->respondDeleted('{{MODEL}} successfully deleted.');
+        } catch (ModelNotFoundException $exception) {
+
+            $response = $this->respondModelNotFound('{{MODEL}} to be deleted not found.', 1404);
+
+        }
+
+        return $response;
+    }
+
+} 

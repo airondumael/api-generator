@@ -1,0 +1,21 @@
+<?php  namespace {{NAMESPACE}}\{{VERSION}}\{{MODEL}}\Validators;
+
+use {{NAMESPACE}}\{{VERSION}}\Validator\AbstractValidator;
+use {{NAMESPACE}}\{{VERSION}}\Validator\ValidatorInterface;
+
+class {{MODEL}}UpdateValidator extends AbstractValidator implements ValidatorInterface {
+
+    protected $id;
+
+    public function getRules()
+    {
+        return [];
+    }
+
+    public function setId($id)
+    {
+        $this->id = $id;
+
+        return $this;
+    }
+} 
