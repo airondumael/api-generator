@@ -20,5 +20,5 @@
             "AironDumael\\ApiGenerator": "src/"
         }
     },
-    "minimum-stability": "dev@master"
+    "minimum-stability": "stable"
 }
